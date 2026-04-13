@@ -1,0 +1,204 @@
+/*comentarios sobre cada parte abaixo do css*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+
+/* O "Reset" "limpar" a bagunça padrão que os navegadores
+
+o (*) é o (Seletor Universal): Diz ao navegador: "Aplique isso em absolutamente TUDO".
+
+margin: 0 e padding: 0: Removem aquele espaço em branco chato que fica nas bordas da página e dentro dos elementos.
+
+box-sizing: border-box (O mais importante): Imagine que você tem uma caixa de 100px e coloca uma moldura (borda) de 10px.
+
+Sem essa regra: Sua caixa passaria a ter 120px de largura total (100 + 10 de um lado + 10 do outro). Isso quebra o layout.
+
+Com essa regra: A caixa continua com 100px, e a borda "come" o espaço de dentro. Isso facilita muito o cálculo do seu design.
+*/
+
+body{
+    background: linear-gradient(to right top, #370505, #610512, #8e0317, #bc0518, #eb1212);
+    height: 100vh; /*Isso é fundamental. Significa "100% da altura da Viewport (tela)". Sem isso, o fundo azul só cobriria onde tem texto, e o resto ficaria branco.*/
+    
+    /*as linha abaixo juntas chamamos de flexbox*/
+
+    display: flex; /* Para alinhar os elementos de forma flexível e fácil */
+    flex-direction: column; /* Faz os itens ficarem um abaixo do outro */
+    align-items: center;    /* Centraliza na horizontal */
+    justify-content: center; /* Centraliza na vertical */
+    color: white;
+    position: relative; /* FUNDAMENTAL: Diz que as imagens vão se posicionar EM RELAÇÃO ao body */
+}
+
+/*
+display: flex; -> Avisa ao navegador: "Ei, a partir de agora, este elemento vai seguir as regras do Flexbox". É o botão de ligar.
+
+flex-direction: column; -> Define a direção. Como você quer um título em cima, os inputs no meio e os botões embaixo, usamos column (coluna). Se quiséssemos um do lado do outro, usaríamos row (linha).
+
+align-items: center; -> Alinha os itens no eixo contrário à direção. Como estamos em coluna, ele alinha na horizontal (esquerda/direita).
+
+justify-content: center; -> Alinha os itens no eixo principal da direção. No nosso caso, na vertical (cima/baixo).*/
+/* Estilo do Título */
+
+body::before {
+    content: ""; /* Obrigatório para o pseudo-elemento funcionar */
+    position: absolute; /* Faz a imagem flutuar */
+    
+    /* Cobre a tela toda */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+    /* Configurações da imagem */
+    background-image: url("./img/code.png");
+    background-repeat: no-repeat;
+    background-position: right center; /* Gruda a imagem na direita e centraliza verticalmente */
+    background-size: contain; /* Ajusta o tamanho para caber sem cortar muito */
+    
+    opacity: 0.2; /* Deixa bem clarinho e sutil ao fundo */
+    z-index: -1;   /* Joga a imagem para TRÁS de todo o conteúdo (título, container, etc) */
+}
+
+.titulo {
+    font-size: 64px;
+    margin-bottom: 2rem; /* Dá um espaço entre o título e os inputs */
+    text-align: center;
+}
+
+.titulo span {
+    color: #e81818; /* Deixa apenas o "De Números" vermelho */
+    display: block; /* Faz o "De Números" pular para a linha de baixo */
+}
+
+/*
+No titulo span, usamos o display: block. Lembra que no seu HTML o "De Números" está dentro de um <span>? Por padrão, o span fica na mesma linha. O block obriga ele a virar uma "caixa" própria e pular de linha.*/
+
+/* Estilo de cada linha de pergunta */
+.campo {
+    display: flex; 
+    justify-content: space-between; /* Empurra o texto para a esquerda e o input para a direita */
+    align-items: center; /* Para alinhar os itens verticalmente no centro */
+    margin-bottom: 20px; /* Para dar um espaço em baixo desse elemento */
+    width: 100%; /* Garante que ocupem a largura total do container */
+}
+/*
+Na .campo, usamos o Flexbox de novo! Mas repare: aqui não usamos column. Deixamos o padrão (row), para que a frase "Quantidade de números" fique ao lado da caixinha de digitar.*/
+
+.inputs {
+    
+    background-color: rgba(232, 24, 24, 0.1); /* Um vermelho bem clarinho e transparente */
+
+    
+    /* Adicionando a imagem de ruído como fundo */
+
+
+    border: 1px solid #e81818;                 /* Borda vermelhas sólida */
+    border-radius: 24px;                       /* Bordas arredondadas */
+    padding: 40px;                             /* Espaço interno para o conteúdo não encostar na borda */
+    width: 500px;                              /* Largura fixa para ficar com cara de cartão */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3); /* Uma sombra para dar profundidade */
+
+    background-image: url("./img/Ruido.png"); /* Coloca a imagem como FUNDO */
+    background-size: cover;      /* Faz a imagem cobrir todo o container */
+    background-repeat: no-repeat;
+    background-blend-mode: overlay; /* Mistura a imagem com a cor de fundo */
+    
+    position: relative; /* Necessário para conter o overflow */
+    overflow: hidden;   /* Garante que o imagem não saia das bordas arredondadas */
+
+}
+/*
+1. background-size: cover
+Esta é essencial! Ela força a imagem a esticar (ou encolher) para cobrir todo o espaço do container. Sem isso, se a sua imagem for pequena, ela pode ficar se repetindo ou deixar espaços vazios.
+
+2. background-blend-mode: overlay
+Esta é a "mágica" que resolve o seu problema da imagem ficar feia ou muito forte.
+
+O modo overlay (sobrepor) mistura a cor azul do item 1 com a textura da imagem do item 2.
+
+O resultado é uma textura azulada elegante, em vez de apenas uma imagem "jogada" lá.
+
+3. position: relative e overflow: hidden
+Lembra que você disse que a imagem estava saindo das bordas?
+
+O overflow: hidden diz: "Qualquer coisa (inclusive o fundo ou imagens internas) que tentar escapar do limite das minhas bordas arredondadas deve ser cortada/escondida".
+
+Para o overflow funcionar bem em alguns navegadores, o position: relative ajuda a confirmar que os limites da "caixa" são aqueles ali mesmo.
+*/
+
+.campo input {
+    width: 80px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: white;
+    color: #e81818;      /* Texto vermelho dentro do fundo branco */
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;  /* Centraliza o número que você digita */
+}
+#botoes {
+    display: flex;
+    gap: 20px;       /* Cria um espaço de 20px entre os dois botões */
+    margin-top: 30px; 
+    width: 30%;     /* Garante que o grupo de botões use a largura do container */
+}
+
+input[type="button"] {
+    flex: 1;                /* Faz os dois botões terem exatamente o mesmo tamanho */
+    padding: 16px 24px;     /* Espaço interno para o botão ficar "gordinho" */
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 16px;
+    border: none;           /* Remove aquela borda cinza feia que vem de fábrica */
+    cursor: pointer;        /* Faz aparecer a "mãozinha" ao passar o mouse */
+    transition: 0.3s;       /* Faz as mudanças de cor serem suaves, não instantâneas */
+}
+/* Botão Sortear */
+.botao-ativo {
+    background-color: #e81818;
+    color: white;
+}
+
+/* Efeito Hover (ao passar o mouse) */
+.botao-ativo:hover {
+    background-color: #a51313; /* Escurece um pouco o azul */
+    transform: scale(1.05);    /* Dá um leve "pulo" para frente */
+}
+
+/* Botão Reiniciar (Desativado) */
+.botao-desativado {
+    background-color: #6f6f70; /* Cinza */
+    color: #a0a0a0;
+    cursor: not-allowed;       /* Muda o ícone do mouse para "proibido" */
+}
+
+
+#resposta {
+    margin-top: 40px;      /* Afasta o resultado dos botões */
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    background: rgba(232, 24, 24, 0.05); /* Um brilho vermelho bem suave */
+    border-radius: 12px;
+}
+
+#resposta h3 {
+    font-size: 24px;
+    font-weight: 400;      /* Deixa o texto principal mais fino */
+    color: #FFF;
+}
+
+/* O número sorteado em si */
+#NumerosSorteados {
+    display: block;        /* Faz o número pular para a linha de baixo */
+    margin-top: 10px;
+    font-size: 48px;       /* Tamanho grande para dar impacto */
+    font-weight: 800;      /* Bem negrito */
+    color: #e81818;        /* Azul vibrante para destacar o resultado */
+    font-family: 'Chakra Petch', sans-serif; /* Aquela fonte tecnológica */
+}

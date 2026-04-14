@@ -178,7 +178,7 @@ input[type="button"] {
 }
 
 
-#resposta {
+#respostaNumeros {
     margin-top: 40px;      /* Afasta o resultado dos botões */
     text-align: center;
     width: 100%;
@@ -187,7 +187,7 @@ input[type="button"] {
     border-radius: 12px;
 }
 
-#resposta h3 {
+#respostaNumeros h3 {
     font-size: 24px;
     font-weight: 400;      /* Deixa o texto principal mais fino */
     color: #FFF;
